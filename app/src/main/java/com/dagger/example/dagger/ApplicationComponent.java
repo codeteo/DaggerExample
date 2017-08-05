@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
+import io.realm.Realm;
 import okhttp3.HttpUrl;
 
 /**
@@ -17,7 +18,7 @@ import okhttp3.HttpUrl;
  */
 
 @Singleton
-@Component(modules = {AndroidSupportInjectionModule.class, ApplicationModule.class, NetworkModule.class})
+@Component(modules = {AndroidSupportInjectionModule.class, ApplicationModule.class, NetworkModule.class, DataModule.class})
 public interface ApplicationComponent {
 
     void inject(MyApplication application);
@@ -32,5 +33,7 @@ public interface ApplicationComponent {
 
     // exposes Interceptor to use it for testing with mockWebServer
     BaseUrlInterceptor baseUrlInterceptor();
+
+    Realm realm();
 
 }
