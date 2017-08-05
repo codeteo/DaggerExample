@@ -2,6 +2,7 @@ package com.dagger.example.dagger;
 
 import android.content.Context;
 
+import com.dagger.example.Constants;
 import com.dagger.example.MyApplication;
 import com.dagger.example.utils.BaseUrlInterceptor;
 import com.dagger.example.utils.ForTestingPurposes;
