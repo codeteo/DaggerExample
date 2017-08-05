@@ -3,10 +3,10 @@ package com.dagger.example;
 import android.app.Activity;
 import android.app.Application;
 
-import com.dagger.example.dagger.ApplicationComponent;
-import com.dagger.example.dagger.ApplicationModule;
-import com.dagger.example.dagger.DaggerApplicationComponent;
-import com.dagger.example.dagger.DataModule;
+import com.dagger.example.dagger.components.ApplicationComponent;
+import com.dagger.example.dagger.components.DaggerApplicationComponent;
+import com.dagger.example.dagger.modules.ApplicationModule;
+import com.dagger.example.dagger.modules.DataModule;
 
 import javax.inject.Inject;
 

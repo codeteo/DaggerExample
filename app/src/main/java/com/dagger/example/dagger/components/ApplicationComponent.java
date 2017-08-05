@@ -1,9 +1,12 @@
-package com.dagger.example.dagger;
+package com.dagger.example.dagger.components;
 
 import android.app.Application;
 import android.content.SharedPreferences;
 
 import com.dagger.example.MyApplication;
+import com.dagger.example.dagger.modules.ApplicationModule;
+import com.dagger.example.dagger.modules.DataModule;
+import com.dagger.example.dagger.modules.NetworkModule;
 import com.dagger.example.utils.BaseUrlInterceptor;
 
 import javax.inject.Singleton;

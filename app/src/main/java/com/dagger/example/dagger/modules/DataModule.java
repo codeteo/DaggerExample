@@ -1,4 +1,4 @@
-package com.dagger.example.dagger;
+package com.dagger.example.dagger.modules;
 
 import android.app.Application;
 

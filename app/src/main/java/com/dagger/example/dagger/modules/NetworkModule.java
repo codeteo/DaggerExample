@@ -1,4 +1,4 @@
-package com.dagger.example.dagger;
+package com.dagger.example.dagger.modules;
 
 import com.dagger.example.utils.MyAdapterFactory;
 import com.dagger.example.utils.BaseUrlInterceptor;
