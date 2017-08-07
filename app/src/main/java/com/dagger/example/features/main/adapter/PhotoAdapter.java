@@ -11,6 +11,7 @@ import com.dagger.example.R;
 import com.dagger.example.data.entities.Photo;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,9 +26,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     private Context context;
     private List<Photo> dataset;
 
-    public PhotoAdapter(Context context, List<Photo> dataset) {
+    public PhotoAdapter(Context context) {
         this.context = context;
-        this.dataset = dataset;
+        this.dataset = new ArrayList<>();
     }
 
     @Override
@@ -49,6 +50,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         return dataset!=null ? dataset.size() : 0;
     }
 
+    public void addItems(List<Photo> photoList) {
+        dataset.addAll(photoList);
+        notifyDataSetChanged();
+    }
+
     public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_photo_image) ImageView ivImage;
@@ -61,6 +67,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         void onBindView(final int position) {
             Picasso.with(context)
                     .load(dataset.get(position).getUrls().getRegular())
+                    .fit()
                     .centerCrop()
                     .into(ivImage);
         }
