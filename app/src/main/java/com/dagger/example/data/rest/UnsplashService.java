@@ -1,5 +1,9 @@
 package com.dagger.example.data.rest;
 
+import com.dagger.example.data.entities.Photo;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -11,6 +15,5 @@ import retrofit2.http.Query;
 public interface UnsplashService {
 
     @GET("photos")
-    Call<Void> getPhotos(@Query("client_id") String apiKey);
-
+    Call<List<Photo>> getPhotos(@Query("client_id") String apiKey);
 }

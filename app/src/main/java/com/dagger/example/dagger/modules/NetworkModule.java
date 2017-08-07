@@ -1,6 +1,5 @@
 package com.dagger.example.dagger.modules;
 
-import com.dagger.example.utils.MyAdapterFactory;
 import com.dagger.example.utils.BaseUrlInterceptor;
 import com.dagger.example.utils.schedulers.BaseSchedulerProvider;
 import com.dagger.example.utils.schedulers.SchedulerProvider;
@@ -36,7 +35,7 @@ public class NetworkModule {
     @Singleton
     Gson providesGson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(MyAdapterFactory.create())
+//                .registerTypeAdapterFactory(MyAdapterFactory.create())
                 .create();
     }
 

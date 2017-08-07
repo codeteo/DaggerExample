@@ -1,6 +1,9 @@
 package com.dagger.example.features.main;
 
+import com.dagger.example.data.entities.Photo;
 import com.dagger.example.data.rest.UnsplashService;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,14 +32,14 @@ public class MainPresenter implements MainMVP.Presenter {
 
     @Override
     public void getPhotos() {
-        unsplashService.getPhotos(apiKey).enqueue(new Callback<Void>() {
+        unsplashService.getPhotos(apiKey).enqueue(new Callback<List<Photo>>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
                 Timber.i("onResponse");
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<List<Photo>> call, Throwable t) {
                 Timber.i("onFailure");
             }
         });
