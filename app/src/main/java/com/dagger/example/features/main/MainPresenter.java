@@ -1,7 +1,7 @@
 package com.dagger.example.features.main;
 
 import com.dagger.example.data.entities.Photo;
-import com.dagger.example.data.rest.UnsplashService;
+import com.dagger.example.data.source.rest.UnsplashService;
 
 import java.util.List;
 

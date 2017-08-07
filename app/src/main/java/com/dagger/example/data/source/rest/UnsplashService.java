@@ -1,4 +1,4 @@
-package com.dagger.example.data.rest;
+package com.dagger.example.data.source.rest;
 
 import com.dagger.example.data.entities.Photo;
 

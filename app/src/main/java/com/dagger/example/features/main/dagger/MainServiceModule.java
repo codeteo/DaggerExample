@@ -1,6 +1,6 @@
 package com.dagger.example.features.main.dagger;
 
-import com.dagger.example.data.rest.UnsplashService;
+import com.dagger.example.data.source.rest.UnsplashService;
 import com.dagger.example.utils.FragmentScope;
 
 import dagger.Module;
