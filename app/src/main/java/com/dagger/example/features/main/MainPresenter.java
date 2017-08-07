@@ -35,7 +35,9 @@ public class MainPresenter implements MainMVP.Presenter {
         unsplashService.getPhotos(apiKey).enqueue(new Callback<List<Photo>>() {
             @Override
             public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-                Timber.i("onResponse");
+                if (response!=null && response.isSuccessful()) {
+                    view.showPhotos(response.body());
+                }
             }
 
             @Override

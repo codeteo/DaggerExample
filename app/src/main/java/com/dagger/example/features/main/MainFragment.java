@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 
 import com.dagger.example.MyApplication;
 import com.dagger.example.R;
+import com.dagger.example.data.entities.Photo;
 import com.dagger.example.features.main.dagger.DaggerMainComponent;
 import com.dagger.example.features.main.dagger.MainPresenterModule;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,7 +55,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
     }
 
     @Override
-    public void showPhotos() {
+    public void showPhotos(List<Photo> photoList) {
 
     }
 }
