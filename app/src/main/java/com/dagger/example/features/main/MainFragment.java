@@ -25,6 +25,8 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
     @Inject
     MainPresenter presenter;
 
+    private List<Photo> dataset;
+
     public static MainFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -56,6 +58,6 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
 
     @Override
     public void showPhotos(List<Photo> photoList) {
-
+        dataset = photoList;
     }
 }
