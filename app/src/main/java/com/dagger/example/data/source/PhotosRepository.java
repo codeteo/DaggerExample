@@ -1,10 +1,10 @@
 package com.dagger.example.data.source;
 
 import com.dagger.example.data.entities.Photo;
-import com.dagger.example.data.source.local.PhotosLocalDataSource;
-import com.dagger.example.data.source.rest.PhotosRemoteDataSource;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Concrete implementation of {@link PhotosDataSource} to load photos from the data sources.
@@ -12,11 +12,13 @@ import java.util.List;
 
 public class PhotosRepository implements PhotosDataSource{
 
-    private final PhotosLocalDataSource localDataSource;
+    private final PhotosDataSource localDataSource;
 
-    private final PhotosRemoteDataSource remoteDataSource;
+    private final PhotosDataSource remoteDataSource;
 
-    public PhotosRepository(PhotosLocalDataSource localDataSource, PhotosRemoteDataSource remoteDataSource) {
+    @Inject
+    public PhotosRepository(@Local PhotosDataSource localDataSource,
+                        @Remote PhotosDataSource remoteDataSource) {
         this.localDataSource = localDataSource;
         this.remoteDataSource = remoteDataSource;
     }
