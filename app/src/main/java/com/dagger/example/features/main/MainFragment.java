@@ -15,6 +15,5 @@ public class MainFragment extends android.support.v4.app.Fragment {
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
         return fragment;
-    }    
-    
+    }
 }
