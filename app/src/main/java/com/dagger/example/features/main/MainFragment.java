@@ -46,6 +46,8 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        presenter.getPhotos();
+
         return view;
     }
 

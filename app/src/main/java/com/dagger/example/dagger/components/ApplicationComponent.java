@@ -15,6 +15,7 @@ import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
 import io.realm.Realm;
 import okhttp3.HttpUrl;
+import retrofit2.Retrofit;
 
 /**
  * Dagger Component builds the object graph for singleton scoped dependencies.
@@ -33,6 +34,8 @@ public interface ApplicationComponent {
     SharedPreferences getSharedPreferences();
 
     HttpUrl baseUrl();
+
+    Retrofit retrofit();
 
     // exposes Interceptor to use it for testing with mockWebServer
     BaseUrlInterceptor baseUrlInterceptor();
