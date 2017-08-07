@@ -1,6 +1,5 @@
 package com.dagger.example.features.main.dagger;
 
-import com.dagger.example.data.rest.UnsplashService;
 import com.dagger.example.features.main.MainMVP;
 import com.dagger.example.utils.FragmentScope;
 
@@ -15,11 +14,9 @@ import dagger.Provides;
 public class MainPresenterModule {
 
     private final MainMVP.View view;
-    private final UnsplashService unsplashService;
 
-    public MainPresenterModule(MainMVP.View view, UnsplashService unsplashService) {
+    public MainPresenterModule(MainMVP.View view) {
         this.view = view;
-        this.unsplashService = unsplashService;
     }
 
     @Provides
@@ -28,9 +25,4 @@ public class MainPresenterModule {
         return view;
     }
 
-    @Provides
-    @FragmentScope
-    UnsplashService provideUnsplashService() {
-        return unsplashService;
-    }
 }

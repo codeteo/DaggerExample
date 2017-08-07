@@ -9,12 +9,18 @@ import android.view.ViewGroup;
 import com.dagger.example.MyApplication;
 import com.dagger.example.R;
 import com.dagger.example.features.main.dagger.DaggerMainComponent;
+import com.dagger.example.features.main.dagger.MainPresenterModule;
+
+import javax.inject.Inject;
 
 /**
  * Displays weather data
  */
 
-public class MainFragment extends android.support.v4.app.Fragment {
+public class MainFragment extends android.support.v4.app.Fragment implements MainMVP.View {
+
+    @Inject
+    MainPresenter presenter;
 
     public static MainFragment newInstance() {
         
@@ -30,8 +36,21 @@ public class MainFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         DaggerMainComponent.builder()
                 .applicationComponent(MyApplication.getApplicationComponent())
+                .mainPresenterModule(new MainPresenterModule(this))
                 .build()
                 .inject(this);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void showPhotos() {
+
+    }
 }
