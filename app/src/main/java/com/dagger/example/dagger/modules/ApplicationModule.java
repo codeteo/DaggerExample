@@ -8,6 +8,7 @@ import com.dagger.example.Constants;
 import com.dagger.example.utils.BaseUrlInterceptor;
 import com.dagger.example.utils.ForTestingPurposes;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -50,6 +51,13 @@ public class ApplicationModule {
     @ForTestingPurposes
     static BaseUrlInterceptor providesBaseUrlInterceptor() {
         return new BaseUrlInterceptor(Constants.BASE_URL);
+    }
+
+    @Provides
+    @Singleton
+    @Named("Api-Key")
+    String providesApiKey() {
+        return Constants.API_KEY;
     }
 
 }

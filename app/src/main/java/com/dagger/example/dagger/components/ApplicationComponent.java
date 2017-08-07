@@ -9,6 +9,7 @@ import com.dagger.example.dagger.modules.DataModule;
 import com.dagger.example.dagger.modules.NetworkModule;
 import com.dagger.example.utils.BaseUrlInterceptor;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -42,4 +43,5 @@ public interface ApplicationComponent {
 
     Realm realm();
 
+    @Named("Api-Key") String  getApiKey();
 }
