@@ -1,4 +1,4 @@
-package com.dagger.example.data;
+package com.dagger.example.data.entities;
 
 import android.os.Parcelable;
 
@@ -17,7 +17,7 @@ public abstract class City implements Parcelable{
     public abstract String getName();
 
     public static Builder builder() {
-        return new AutoValue_City.Builder();
+        return new $$AutoValue_City.Builder();
     }
 
     @AutoValue.Builder
@@ -29,7 +29,7 @@ public abstract class City implements Parcelable{
     }
 
     public static TypeAdapter<City> typeAdapter(Gson gson) {
-        return new AutoValue_City.GsonTypeAdapter(gson);
+        return new $AutoValue_City.GsonTypeAdapter(gson);
     }
 
 }

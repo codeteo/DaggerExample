@@ -1,4 +1,4 @@
-package com.dagger.example.data;
+package com.dagger.example.data.entities;
 
 import android.os.Parcelable;
 
@@ -16,7 +16,7 @@ public abstract class User implements Parcelable {
     @SerializedName("avatar_url") public abstract String getAvatarUrl();
 
     public static Builder builder() {
-        return new AutoValue_User.Builder();
+        return new $$AutoValue_User.Builder();
     }
 
     @AutoValue.Builder
@@ -28,6 +28,6 @@ public abstract class User implements Parcelable {
     }
 
     public static TypeAdapter<User> typeAdapter(Gson gson) {
-        return new AutoValue_User.GsonTypeAdapter(gson);
+        return new $AutoValue_User.GsonTypeAdapter(gson);
     }
 }

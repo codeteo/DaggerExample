@@ -1,4 +1,4 @@
-package com.dagger.example.data;
+package com.dagger.example.data.entities;
 
 import android.os.Parcelable;
 
@@ -25,7 +25,7 @@ public abstract class Main implements Parcelable {
     public abstract double tempMax();
 
     public static Builder builder() {
-        return new AutoValue_Main.Builder();
+        return new $$AutoValue_Main.Builder();
     }
 
     @AutoValue.Builder
@@ -40,7 +40,7 @@ public abstract class Main implements Parcelable {
     }
 
     public static TypeAdapter<Main> typeAdapter(Gson gson) {
-        return new AutoValue_Main.GsonTypeAdapter(gson);
+        return new $AutoValue_Main.GsonTypeAdapter(gson);
     }
 
 }

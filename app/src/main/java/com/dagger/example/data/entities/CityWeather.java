@@ -1,4 +1,4 @@
-package com.dagger.example.data;
+package com.dagger.example.data.entities;
 
 import android.os.Parcelable;
 
@@ -21,7 +21,7 @@ public abstract class CityWeather implements Parcelable {
     @SerializedName("isFavorite") public abstract boolean getIsFavorite();
 
     public static Builder builder() {
-        return new AutoValue_CityWeather.Builder();
+        return new $$AutoValue_CityWeather.Builder();
     }
 
     @AutoValue.Builder
@@ -36,6 +36,6 @@ public abstract class CityWeather implements Parcelable {
     }
 
     public static TypeAdapter<CityWeather> typeAdapter(Gson gson) {
-        return new AutoValue_CityWeather.GsonTypeAdapter(gson);
+        return new $AutoValue_CityWeather.GsonTypeAdapter(gson);
     }
 }

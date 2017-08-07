@@ -1,4 +1,4 @@
-package com.dagger.example.data;
+package com.dagger.example.data.entities;
 
 import android.os.Parcelable;
 
@@ -18,7 +18,7 @@ public abstract class Weather implements Parcelable {
     public abstract String getIcon();
 
     public static Builder builder() {
-        return new AutoValue_Weather.Builder();
+        return new $$AutoValue_Weather.Builder();
     }
 
     @AutoValue.Builder
@@ -32,7 +32,7 @@ public abstract class Weather implements Parcelable {
     }
 
     public static TypeAdapter<Weather> typeAdapter(Gson gson) {
-        return new AutoValue_Weather.GsonTypeAdapter(gson);
+        return new $AutoValue_Weather.GsonTypeAdapter(gson);
     }
 
 }
