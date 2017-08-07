@@ -8,6 +8,8 @@ android:
     - extra-android-m2repository
 jdk:
   - oraclejdk8
+before_install:
+    gradle -b wrapper.gradle wrapper
 script:
   - cd app
   - ./gradlew test

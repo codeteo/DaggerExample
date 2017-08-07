@@ -97,3 +97,11 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.5.1'
     implementation "com.squareup.picasso:picasso:$project.picassoVersion"
 }
+
+check.doFirst {
+    println "Running gradle v${project.gradle.gradleVersion}"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
+}
