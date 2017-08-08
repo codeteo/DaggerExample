@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by css on 8/7/17.
+ * Photo object we get as a response from unsplash server.
  */
 
 public class Photo implements Serializable {

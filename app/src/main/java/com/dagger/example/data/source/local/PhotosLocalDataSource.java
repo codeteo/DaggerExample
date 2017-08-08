@@ -24,7 +24,9 @@ public class PhotosLocalDataSource implements PhotosDataSource {
 
     @Override
     public void addPhotos(List<Photo> photoList) {
+        // run mapper
 
+        // save photos
     }
 
     @Override
