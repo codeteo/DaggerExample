@@ -7,6 +7,8 @@ import com.dagger.example.dagger.components.ApplicationComponent;
 import com.dagger.example.dagger.components.DaggerApplicationComponent;
 import com.dagger.example.dagger.modules.ApplicationModule;
 import com.dagger.example.dagger.modules.DataModule;
+import com.facebook.stetho.Stetho;
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import javax.inject.Inject;
 
@@ -34,6 +36,8 @@ public class MyApplication extends Application implements HasActivityInjector {
             Timber.plant(new DebugTree());
         }
 
+        setupStetho();
+
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .applicationModule(new ApplicationModule(this))
@@ -42,6 +46,15 @@ public class MyApplication extends Application implements HasActivityInjector {
 
         applicationComponent.inject(this);
 
+    }
+
+    private void setupStetho() {
+        Stetho.initializeWithDefaults(this);
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                        .build());
     }
 
     @Override

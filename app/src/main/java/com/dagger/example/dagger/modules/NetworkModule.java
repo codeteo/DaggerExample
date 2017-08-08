@@ -3,6 +3,7 @@ package com.dagger.example.dagger.modules;
 import com.dagger.example.utils.BaseUrlInterceptor;
 import com.dagger.example.utils.schedulers.BaseSchedulerProvider;
 import com.dagger.example.utils.schedulers.SchedulerProvider;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -50,6 +51,7 @@ public class NetworkModule {
         client.retryOnConnectionFailure(true);
         client.addInterceptor(interceptor);
         client.addInterceptor(baseUrlInterceptor);
+        client.addNetworkInterceptor(new StethoInterceptor());
         client.connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS);
 
         return client.build();

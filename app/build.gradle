@@ -44,6 +44,7 @@ project.ext {
     rxAndroidVersion = '1.2.1'
     rxBindingsVersion = '1.0.1'
     picassoVersion = '2.5.2'
+    stethoVersion = '1.5.0'
 }
 
 dependencies {
@@ -96,4 +97,9 @@ dependencies {
     // Utilities
     implementation 'com.jakewharton.timber:timber:4.5.1'
     implementation "com.squareup.picasso:picasso:$project.picassoVersion"
+
+    // Stetho
+    implementation "com.facebook.stetho:stetho:$project.stethoVersion"
+    implementation "com.facebook.stetho:stetho-okhttp3:$project.stethoVersion"
+    implementation 'com.uphyca:stetho_realm:2.1.0'
 }
