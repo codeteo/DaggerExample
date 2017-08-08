@@ -17,6 +17,7 @@ import timber.log.Timber;
 public class DataModule {
 
     private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "db.realm";
 
     @Provides
     @Singleton
@@ -24,6 +25,7 @@ public class DataModule {
         Realm.init(application);
 
         return new RealmConfiguration.Builder()
+                .name(DATABASE_NAME)
                 .schemaVersion(DATABASE_VERSION)
                 .build();
     }

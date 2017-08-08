@@ -10,6 +10,8 @@ import com.dagger.example.dagger.modules.DataModule;
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
+import java.util.regex.Pattern;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
@@ -53,7 +55,12 @@ public class MyApplication extends Application implements HasActivityInjector {
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                        .enableWebKitInspector(
+                                RealmInspectorModulesProvider.builder(this)
+                                    .withDescendingOrder()
+                                    .withLimit(1000)
+                                    .databaseNamePattern(Pattern.compile(".+.realm"))
+                                    .build())
                         .build());
     }
 
