@@ -5,6 +5,7 @@ import com.dagger.example.data.entities.PhotoDto;
 import com.dagger.example.data.source.PhotosDataSource;
 import com.dagger.example.features.main.utils.PhotoMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,13 +29,19 @@ public class PhotosLocalDataSource implements PhotosDataSource {
 
     @Override
     public void addPhotos(List<Photo> photoList) {
+        List<PhotoDto> photoDtoList = new ArrayList<>();
         // run mapper
         photoMapper = new PhotoMapper();
         for (Photo photo: photoList){
             PhotoDto photoDto = photoMapper.from(photo);
-            // save photos
-            realm.insertOrUpdate(photoDto);
+            photoDtoList.add(photoDto);
         }
+
+        // save photos
+        try(Realm realmInstance = realm) {
+            realmInstance.executeTransaction(realm1 -> realm1.insertOrUpdate(photoDtoList));
+        }
+
     }
 
     @Override
