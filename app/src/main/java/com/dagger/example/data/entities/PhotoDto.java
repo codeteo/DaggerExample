@@ -1,7 +1,7 @@
 package com.dagger.example.data.entities;
 
 import io.realm.RealmObject;
-import io.realm.annotations.Index;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Realm object for {@link Photo}
@@ -9,7 +9,7 @@ import io.realm.annotations.Index;
 
 public class PhotoDto extends RealmObject {
 
-    @Index
+    @PrimaryKey
     private String id;
 
     private String url;
