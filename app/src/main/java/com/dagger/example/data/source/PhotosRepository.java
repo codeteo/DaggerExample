@@ -47,9 +47,32 @@ public class PhotosRepository implements PhotosDataSource{
     public List<Photo> getPhotos(LoadPhotosCallback callback) {
         NetworkUtils networkUtils = new NetworkUtils(application);
         if (networkUtils.isOnline()) {
-            remoteDataSource.getPhotos(callback);
+            remoteDataSource.getPhotos(new LoadPhotosCallback() {
+                @Override
+                public void onPhotosLoaded(List<Photo> photoList) {
+                    // on success : pass photos to presenter to be displayed and
+                    // call localDataSource to save them
+                    callback.onPhotosLoaded(photoList);
+                    localDataSource.addPhotos(photoList);
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    callback.onDataNotAvailable();
+                }
+            });
         } else {
-            return localDataSource.getPhotos(callback);
+            return localDataSource.getPhotos(new LoadPhotosCallback() {
+                @Override
+                public void onPhotosLoaded(List<Photo> photoList) {
+                    callback.onPhotosLoaded(photoList);
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    callback.onDataNotAvailable();
+                }
+            });
         }
 
         return null;
