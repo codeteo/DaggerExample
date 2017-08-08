@@ -1,7 +1,9 @@
 package com.dagger.example.data.source.local;
 
 import com.dagger.example.data.entities.Photo;
+import com.dagger.example.data.entities.PhotoDto;
 import com.dagger.example.data.source.PhotosDataSource;
+import com.dagger.example.features.main.utils.PhotoMapper;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class PhotosLocalDataSource implements PhotosDataSource {
 
     private Realm realm;
 
+    private PhotoMapper photoMapper;
+
     @Inject
     public PhotosLocalDataSource(Realm realm) {
         this.realm = realm;
@@ -25,8 +29,12 @@ public class PhotosLocalDataSource implements PhotosDataSource {
     @Override
     public void addPhotos(List<Photo> photoList) {
         // run mapper
-
-        // save photos
+        photoMapper = new PhotoMapper();
+        for (Photo photo: photoList){
+            PhotoDto photoDto = photoMapper.from(photo);
+            // save photos
+            realm.insertOrUpdate(photoDto);
+        }
     }
 
     @Override
