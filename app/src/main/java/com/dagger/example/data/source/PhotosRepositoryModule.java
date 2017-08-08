@@ -1,5 +1,7 @@
 package com.dagger.example.data.source;
 
+import android.app.Application;
+
 import com.dagger.example.data.source.local.PhotosLocalDataSource;
 import com.dagger.example.data.source.rest.PhotosRemoteDataSource;
 import com.dagger.example.data.source.rest.UnsplashService;
@@ -21,8 +23,8 @@ public class PhotosRepositoryModule {
     @Provides
     @FragmentScope
     @Local
-    PhotosDataSource providePhotosLocalDataSource(Realm realm) {
-        return new PhotosLocalDataSource(realm);
+    PhotosDataSource providePhotosLocalDataSource(Realm realm, Application application) {
+        return new PhotosLocalDataSource(realm, application);
     }
 
     @Provides
