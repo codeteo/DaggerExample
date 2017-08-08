@@ -1,6 +1,9 @@
 package com.dagger.example.data.source;
 
+import android.app.Application;
+
 import com.dagger.example.data.entities.Photo;
+import com.dagger.example.utils.NetworkUtils;
 
 import java.util.List;
 
@@ -16,11 +19,14 @@ public class PhotosRepository implements PhotosDataSource{
 
     private final PhotosDataSource remoteDataSource;
 
+    private Application application;
+
     @Inject
     public PhotosRepository(@Local PhotosDataSource localDataSource,
-                        @Remote PhotosDataSource remoteDataSource) {
+                            @Remote PhotosDataSource remoteDataSource, Application application) {
         this.localDataSource = localDataSource;
         this.remoteDataSource = remoteDataSource;
+        this.application = application;
     }
 
     @Override
@@ -39,8 +45,13 @@ public class PhotosRepository implements PhotosDataSource{
      */
     @Override
     public List<Photo> getPhotos(LoadPhotosCallback callback) {
-        remoteDataSource.getPhotos(callback);
+        NetworkUtils networkUtils = new NetworkUtils(application);
+        if (networkUtils.isOnline()) {
+            remoteDataSource.getPhotos(callback);
+        } else {
+            return localDataSource.getPhotos(callback);
+        }
 
-        return localDataSource.getPhotos(callback);
+        return null;
     }
 }
