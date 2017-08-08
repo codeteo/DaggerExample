@@ -33,8 +33,14 @@ public class PhotosRepository implements PhotosDataSource{
 
     }
 
+    /**
+     * Starts a call to get the data from the network and at the same time
+     * responds with the data from database.
+     */
     @Override
-    public List<Photo> getPhotos() {
-        return null;
+    public List<Photo> getPhotos(LoadPhotosCallback callback) {
+        remoteDataSource.getPhotos(callback);
+
+        return localDataSource.getPhotos(callback);
     }
 }

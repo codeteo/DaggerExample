@@ -39,13 +39,13 @@ public class PhotosRemoteDataSource implements PhotosDataSource {
     }
 
     @Override
-    public List<Photo> getPhotos() {
+    public List<Photo> getPhotos(LoadPhotosCallback callback) {
         unsplashService.getPhotos(apiKey).enqueue(new Callback<List<Photo>>() {
             @Override
             public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
                 if (response!=null && response.isSuccessful()) {
-                    Timber.i("SUCCESS LEMEEEEEEEEEEEE");
-
+                    Timber.i("SUCCESS");
+                    callback.onPhotosLoaded(response.body());
                 }
             }
 

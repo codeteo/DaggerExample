@@ -33,7 +33,7 @@ public class PhotosLocalDataSource implements PhotosDataSource {
     }
 
     @Override
-    public List<Photo> getPhotos() {
+    public List<Photo> getPhotos(LoadPhotosCallback callback) {
         return null;
     }
 }

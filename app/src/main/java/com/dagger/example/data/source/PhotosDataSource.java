@@ -14,6 +14,14 @@ public interface PhotosDataSource {
 
     void addPhoto(Photo photo);
 
-    List<Photo> getPhotos();
+    List<Photo> getPhotos(LoadPhotosCallback callback);
+
+    interface LoadPhotosCallback {
+
+        void onPhotosLoaded(List<Photo> photoList);
+
+        void onDataNotAvailable();
+
+    }
 
 }
