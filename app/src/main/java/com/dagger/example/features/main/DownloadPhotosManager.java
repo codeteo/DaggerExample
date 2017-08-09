@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 
+import com.dagger.example.Constants;
 import com.dagger.example.data.entities.PhotoDto;
 
 import java.io.File;
@@ -60,7 +61,7 @@ public class DownloadPhotosManager {
         Timber.i("INSIDE executeRequest");
 
         try {
-            request = new DownloadManager.Request(Uri.parse(firstUrl));
+            request = new DownloadManager.Request(Uri.parse(Constants.BASE_URL + firstUrl));
         } catch (IllegalArgumentException e) {
             Timber.i("Error == %s", e.getMessage());
         }

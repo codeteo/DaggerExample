@@ -102,4 +102,7 @@ dependencies {
     implementation "com.facebook.stetho:stetho:$project.stethoVersion"
     implementation "com.facebook.stetho:stetho-okhttp3:$project.stethoVersion"
     implementation 'com.uphyca:stetho_realm:2.1.0'
+
+    // Permissions
+    implementation 'pub.devrel:easypermissions:0.4.3'
 }
