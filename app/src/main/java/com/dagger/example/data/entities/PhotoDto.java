@@ -14,6 +14,8 @@ public class PhotoDto extends RealmObject {
 
     private String url;
 
+    private String downloadUrl;
+
     public String getId() {
         return id;
     }
@@ -28,5 +30,13 @@ public class PhotoDto extends RealmObject {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
 }

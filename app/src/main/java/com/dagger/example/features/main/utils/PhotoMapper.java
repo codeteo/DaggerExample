@@ -15,6 +15,7 @@ public class PhotoMapper {
 
         photoDto.setId(photo.getId());
         photoDto.setUrl(photo.getUrls().getFull());
+        photoDto.setDownloadUrl(photo.getLinks().getDownload());
 
         return photoDto;
     }

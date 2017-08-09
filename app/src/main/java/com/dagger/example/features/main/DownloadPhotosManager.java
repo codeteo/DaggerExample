@@ -5,11 +5,11 @@ import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 
-import com.dagger.example.Constants;
 import com.dagger.example.data.entities.PhotoDto;
 
 import java.io.File;
@@ -51,17 +51,16 @@ public class DownloadPhotosManager {
         realmUrls = realm.where(PhotoDto.class)
                 .findAll();
 
-        Timber.i("After Transaction");
-
-        firstUrl = realmUrls.get(0).getId();
-        Timber.i("url == %s", firstUrl);
+        firstUrl = realmUrls.get(0).getDownloadUrl();
     }
 
     private void executeRequest() {
         Timber.i("INSIDE executeRequest");
 
+        Timber.i("downloadURL == %s", firstUrl);
+
         try {
-            request = new DownloadManager.Request(Uri.parse(Constants.BASE_URL + firstUrl));
+            request = new DownloadManager.Request(Uri.parse(firstUrl));
         } catch (IllegalArgumentException e) {
             Timber.i("Error == %s", e.getMessage());
         }
@@ -111,7 +110,7 @@ public class DownloadPhotosManager {
         };
 
         // register receiver to listen for ACTION_DOWNLOAD_COMPLETE action
-        // registerReceiver(mDLCompleteReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+         application.registerReceiver(broadcastReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
     }
 
