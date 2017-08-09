@@ -13,7 +13,9 @@ import android.os.Environment;
 import com.dagger.example.data.entities.PhotoDto;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -27,6 +29,7 @@ import timber.log.Timber;
 public class DownloadPhotosManager {
 
     private static final String SUFFIX = "jpeg";
+    private static final String DIR_NAME = "Dagger";
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -34,6 +37,7 @@ public class DownloadPhotosManager {
     private Application application;
 
     private RealmResults<PhotoDto> realmUrls;
+    private List<PhotoDto> toBeDownloadedList = new ArrayList<>();
 
     public DownloadPhotosManager(Realm realm, Application application) {
         this.realm = realm;
@@ -42,6 +46,10 @@ public class DownloadPhotosManager {
 
     public void execute() {
         getUrlsFromDB();
+
+        // remove urls that already have a photo stored
+        removeDownloadedPhotosUrls(getPhotosFilenames());
+
         executeRequest();
     }
 
@@ -51,15 +59,15 @@ public class DownloadPhotosManager {
     }
 
     private void executeRequest() {
-        Timber.i("INSIDE executeRequest");
+        Timber.i("START executeRequest");
 
         final DownloadManager downloadManager = (DownloadManager) application.getSystemService(Context.DOWNLOAD_SERVICE);
 
         // contains ID for each download request
-        final long[] DL_ID = new long[realmUrls.size()];
+        final long[] DL_ID = new long[toBeDownloadedList.size()];
 
-        for (int i = 0; i < realmUrls.size(); i++) {
-            DL_ID[i] = downloadManager.enqueue(createRequestForDM(realmUrls.get(i)));
+        for (int i = 0; i < toBeDownloadedList.size(); i++) {
+            DL_ID[i] = downloadManager.enqueue(createRequestForDM(toBeDownloadedList.get(i)));
         }
 
         // get notified when the downloadManager is complete
@@ -70,6 +78,8 @@ public class DownloadPhotosManager {
 
                 // ID of completed download
                 long completedDownloadID = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
+
+                Timber.i("MESA sto onReceive with completedID == %d", completedDownloadID);
 
                 if (Arrays.asList(DL_ID).contains(completedDownloadID)) {
 
@@ -95,6 +105,7 @@ public class DownloadPhotosManager {
         };
 
         // register receiver to listen for ACTION_DOWNLOAD_COMPLETE action
+        // TODO: 8/9/17 Dont forget to unregister receiver
          application.registerReceiver(broadcastReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
     }
@@ -115,10 +126,51 @@ public class DownloadPhotosManager {
 
         // set the destination path for this download
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES +
-                File.separator + "image_test", photoDto.getId() + "." + SUFFIX);
+                File.separator + DIR_NAME, photoDto.getId() + "." + SUFFIX);
         request.allowScanningByMediaScanner();
 
         return request;
     }
 
+    /**
+     * Get the filenames of the files stored in "Pictures/Dagger" directory.
+     * @return list of filenames without the ".jpeg" suffix.
+     */
+    private List<String> getPhotosFilenames() {
+        List<String> filenamesList = new ArrayList<>();
+
+        File picturesDir = new File(Environment.getExternalStorageDirectory(), "Pictures");
+        File daggerDir = new File(picturesDir, DIR_NAME);
+
+        if (daggerDir.exists()) {
+            for (File file : daggerDir.listFiles()) {
+                if (file.isFile()) {
+                    String fileName = file.getName();
+                    filenamesList.add(stripSuffix(fileName));
+                }
+            }
+        }
+
+        return filenamesList;
+    }
+
+    /**
+     * Removes ".jpeg" suffix from filename
+     * @return filename without suffix
+     */
+    private String stripSuffix(String filename) {
+        return filename.replace(".jpeg", "");
+    }
+
+    /**
+     * Removes urls from the list of to-be-downloaded urls that already have
+     *
+     */
+    private void removeDownloadedPhotosUrls(List<String> filenames) {
+        for (PhotoDto photoDto:realmUrls){
+            if (!filenames.contains(photoDto.getId())) {
+                toBeDownloadedList.add(photoDto);
+            }
+        }
+    }
 }

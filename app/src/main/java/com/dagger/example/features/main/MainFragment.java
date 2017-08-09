@@ -85,7 +85,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
     @Override
     public void showPhotos(List<Photo> photoList) {
         if (photoList != null && photoList.size() > 0) {
-            Timber.i("size BIGGER than zero");
+            Timber.i("size GREATER than zero");
             adapter.addItems(photoList);
         } else {
             Timber.i("SIZE IS ZERO");
