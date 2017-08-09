@@ -56,7 +56,6 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
                 .build()
                 .inject(this);
 
-        presenter.getPhotos();
     }
 
     @Nullable
@@ -69,6 +68,8 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
 
         adapter = new PhotoAdapter(getActivity());
         setupRecyclerView();
+
+        presenter.getPhotos();
 
         return view;
     }

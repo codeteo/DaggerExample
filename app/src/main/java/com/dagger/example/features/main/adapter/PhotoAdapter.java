@@ -1,6 +1,7 @@
 package com.dagger.example.features.main.adapter;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,13 @@ import com.dagger.example.data.entities.PhotoDto;
 import com.dagger.example.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Adapter for Photo items in {@link com.dagger.example.features.main.MainFragment}
@@ -66,19 +69,36 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         }
 
         void onBindView(final int position) {
-            final String url;
+            String url = null;
+            boolean isOnline = new NetworkUtils(context).isOnline();
+            File path = null;
 
-            if (new NetworkUtils(context).isOnline()) {
+            if (isOnline) {
                 url = dataset.get(position).getUrl();
             } else {
-                url = dataset.get(position).getDownloadUrl();
+
+                File picturesDir = new File(Environment.getExternalStorageDirectory(), "Pictures");
+                File daggerDir = new File(picturesDir, "Dagger");
+
+                path = new File(daggerDir, dataset.get(position).getId() + ".jpeg");
+                Timber.i("path == %s", path.getAbsoluteFile());
             }
 
-            Picasso.with(context)
-                    .load(url)
-                    .fit()
-                    .centerCrop()
-                    .into(ivImage);
+            if (isOnline) {
+                Picasso.with(context)
+                        .load(url)
+                        .fit()
+                        .centerCrop()
+                        .into(ivImage);
+
+            } else {
+                Picasso.with(context)
+                        .load(new File(path.getPath()))
+                        .fit()
+                        .centerCrop()
+                        .into(ivImage);
+            }
+
         }
 
     }

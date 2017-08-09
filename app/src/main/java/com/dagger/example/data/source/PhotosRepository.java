@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * Concrete implementation of {@link PhotosDataSource} to load photos from the data sources.
  */
@@ -62,9 +64,10 @@ public class PhotosRepository implements PhotosDataSource{
                 }
             });
         } else {
-            return localDataSource.getPhotos(new LoadPhotosCallback() {
+            localDataSource.getPhotos(new LoadPhotosCallback() {
                 @Override
                 public void onPhotosLoaded(List<PhotoDto> photoList) {
+                    Timber.i("onPhotos Loaded");
                     callback.onPhotosLoaded(photoList);
                 }
 

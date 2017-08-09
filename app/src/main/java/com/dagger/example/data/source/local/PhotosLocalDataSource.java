@@ -51,6 +51,17 @@ public class PhotosLocalDataSource implements PhotosDataSource {
 
     @Override
     public List<PhotoDto> getPhotos(LoadPhotosCallback callback) {
+        List<PhotoDto> photoDtoList;
+
+        try(Realm realmInstance = realm.getDefaultInstance()) {
+            photoDtoList = realmInstance.where(PhotoDto.class)
+                    .findAll();
+        }
+
+        Timber.i("SIZE ======= %d", photoDtoList.size());
+
+        callback.onPhotosLoaded(photoDtoList);
+
         return null;
     }
 }
