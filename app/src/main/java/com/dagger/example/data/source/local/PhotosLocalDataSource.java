@@ -42,7 +42,7 @@ public class PhotosLocalDataSource implements PhotosDataSource {
         }
 
         // save photos
-        try(Realm realmInstance = realm) {
+        try(Realm realmInstance = realm.getDefaultInstance()) {
             realmInstance.executeTransaction(realm1 -> realm1.insertOrUpdate(photoDtoList));
 
             Timber.i("Before Execute");

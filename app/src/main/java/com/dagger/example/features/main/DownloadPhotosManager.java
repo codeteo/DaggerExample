@@ -47,15 +47,18 @@ public class DownloadPhotosManager {
     public void execute() {
         getUrlsFromDB();
 
-        // remove urls that already have a photo stored
-        removeDownloadedPhotosUrls(getPhotosFilenames());
-
         executeRequest();
     }
 
     private void getUrlsFromDB() {
-        realmUrls = realm.where(PhotoDto.class)
-                .findAll();
+        try(Realm realmInstance = realm.getDefaultInstance()) {
+
+            realmUrls = realmInstance.where(PhotoDto.class)
+                    .findAll();
+
+            // remove urls that already have a photo stored
+            removeDownloadedPhotosUrls(getPhotosFilenames());
+        }
     }
 
     private void executeRequest() {
