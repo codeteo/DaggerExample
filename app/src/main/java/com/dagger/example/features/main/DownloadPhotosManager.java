@@ -68,14 +68,14 @@ public class DownloadPhotosManager {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                // our downloadManager
-                long intentID = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
+                // ID of completed download
+                long completedDownloadID = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
 
-                if (Arrays.asList(DL_ID).contains(intentID)) {
+                if (Arrays.asList(DL_ID).contains(completedDownloadID)) {
 
                     // get the path of the downloaded file
                     DownloadManager.Query query = new DownloadManager.Query();
-                    query.setFilterById(intentID);
+                    query.setFilterById(completedDownloadID);
                     Cursor cursor = downloadManager.query(query);
                     if (!cursor.moveToFirst()) {
                         Timber.i("Download error: cursor is empty");
@@ -114,7 +114,7 @@ public class DownloadPhotosManager {
         request.setDescription("Downloading file");
 
         // set the destination path for this download
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS +
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES +
                 File.separator + "image_test", photoDto.getId() + "." + SUFFIX);
         request.allowScanningByMediaScanner();
 
