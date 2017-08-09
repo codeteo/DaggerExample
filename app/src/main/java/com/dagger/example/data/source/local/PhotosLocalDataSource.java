@@ -2,13 +2,10 @@ package com.dagger.example.data.source.local;
 
 import android.app.Application;
 
-import com.dagger.example.data.entities.Photo;
 import com.dagger.example.data.entities.PhotoDto;
 import com.dagger.example.data.source.PhotosDataSource;
 import com.dagger.example.features.main.DownloadPhotosManager;
-import com.dagger.example.features.main.utils.PhotoMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,14 +29,7 @@ public class PhotosLocalDataSource implements PhotosDataSource {
     }
 
     @Override
-    public void addPhotos(List<Photo> photoList) {
-        List<PhotoDto> photoDtoList = new ArrayList<>();
-        // run mapper
-        PhotoMapper photoMapper = new PhotoMapper();
-        for (Photo photo: photoList){
-            PhotoDto photoDto = photoMapper.from(photo);
-            photoDtoList.add(photoDto);
-        }
+    public void addPhotos(List<PhotoDto> photoDtoList) {
 
         // save photos
         try(Realm realmInstance = realm.getDefaultInstance()) {
@@ -55,12 +45,12 @@ public class PhotosLocalDataSource implements PhotosDataSource {
     }
 
     @Override
-    public void addPhoto(Photo photo) {
+    public void addPhoto(PhotoDto photoDto) {
 
     }
 
     @Override
-    public List<Photo> getPhotos(LoadPhotosCallback callback) {
+    public List<PhotoDto> getPhotos(LoadPhotosCallback callback) {
         return null;
     }
 }

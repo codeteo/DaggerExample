@@ -1,6 +1,6 @@
 package com.dagger.example.features.main;
 
-import com.dagger.example.data.entities.Photo;
+import com.dagger.example.data.entities.PhotoDto;
 import com.dagger.example.data.source.PhotosDataSource.LoadPhotosCallback;
 import com.dagger.example.data.source.PhotosRepository;
 
@@ -34,7 +34,7 @@ public class MainPresenter implements MainMVP.Presenter {
     public void getPhotos() {
         repository.getPhotos(new LoadPhotosCallback() {
             @Override
-            public void onPhotosLoaded(List<Photo> photoList) {
+            public void onPhotosLoaded(List<PhotoDto> photoList) {
                 Timber.i("onPhotos Loaded");
                 view.showPhotos(photoList);
             }

@@ -1,6 +1,6 @@
 package com.dagger.example.features.main;
 
-import com.dagger.example.data.entities.Photo;
+import com.dagger.example.data.entities.PhotoDto;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface MainMVP {
 
     interface View {
 
-        void showPhotos(List<Photo> photoList);
+        void showPhotos(List<PhotoDto> photoList);
 
     }
 

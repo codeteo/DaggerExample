@@ -51,7 +51,6 @@ public class MyApplication extends Application implements HasActivityInjector {
     }
 
     private void setupStetho() {
-        Stetho.initializeWithDefaults(this);
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))

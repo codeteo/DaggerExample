@@ -1,6 +1,6 @@
 package com.dagger.example.data.source;
 
-import com.dagger.example.data.entities.Photo;
+import com.dagger.example.data.entities.PhotoDto;
 
 import java.util.List;
 
@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface PhotosDataSource {
 
-    void addPhotos(List<Photo> photoList);
+    void addPhotos(List<PhotoDto> photoList);
 
-    void addPhoto(Photo photo);
+    void addPhoto(PhotoDto photo);
 
-    List<Photo> getPhotos(LoadPhotosCallback callback);
+    List<PhotoDto> getPhotos(LoadPhotosCallback callback);
 
     interface LoadPhotosCallback {
 
-        void onPhotosLoaded(List<Photo> photoList);
+        void onPhotosLoaded(List<PhotoDto> photoList);
 
         void onDataNotAvailable();
 

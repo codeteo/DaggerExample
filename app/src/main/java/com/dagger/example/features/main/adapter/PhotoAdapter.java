@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.dagger.example.R;
-import com.dagger.example.data.entities.Photo;
+import com.dagger.example.data.entities.PhotoDto;
+import com.dagger.example.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
 
     private Context context;
-    private List<Photo> dataset;
+    private List<PhotoDto> dataset;
 
     public PhotoAdapter(Context context) {
         this.context = context;
@@ -50,7 +51,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         return dataset!=null ? dataset.size() : 0;
     }
 
-    public void addItems(List<Photo> photoList) {
+    public void addItems(List<PhotoDto> photoList) {
         dataset.addAll(photoList);
         notifyDataSetChanged();
     }
@@ -65,8 +66,16 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         }
 
         void onBindView(final int position) {
+            final String url;
+
+            if (new NetworkUtils(context).isOnline()) {
+                url = dataset.get(position).getUrl();
+            } else {
+                url = dataset.get(position).getDownloadUrl();
+            }
+
             Picasso.with(context)
-                    .load(dataset.get(position).getUrls().getRegular())
+                    .load(url)
                     .fit()
                     .centerCrop()
                     .into(ivImage);

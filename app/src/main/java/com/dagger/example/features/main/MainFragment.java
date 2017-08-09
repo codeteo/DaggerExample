@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.dagger.example.MyApplication;
 import com.dagger.example.R;
-import com.dagger.example.data.entities.Photo;
+import com.dagger.example.data.entities.PhotoDto;
 import com.dagger.example.features.main.adapter.PhotoAdapter;
 import com.dagger.example.features.main.dagger.DaggerMainComponent;
 import com.dagger.example.features.main.dagger.MainPresenterModule;
@@ -36,7 +36,6 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
     @Inject
     MainPresenter presenter;
 
-    private List<Photo> dataset;
     private PhotoAdapter adapter;
 
     public static MainFragment newInstance() {
@@ -83,7 +82,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
     }
 
     @Override
-    public void showPhotos(List<Photo> photoList) {
+    public void showPhotos(List<PhotoDto> photoList) {
         if (photoList != null && photoList.size() > 0) {
             Timber.i("size GREATER than zero");
             adapter.addItems(photoList);

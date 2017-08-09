@@ -2,7 +2,7 @@ package com.dagger.example.data.source;
 
 import android.app.Application;
 
-import com.dagger.example.data.entities.Photo;
+import com.dagger.example.data.entities.PhotoDto;
 import com.dagger.example.utils.NetworkUtils;
 
 import java.util.List;
@@ -30,12 +30,12 @@ public class PhotosRepository implements PhotosDataSource{
     }
 
     @Override
-    public void addPhotos(List<Photo> photoList) {
+    public void addPhotos(List<PhotoDto> photoDtoList) {
 
     }
 
     @Override
-    public void addPhoto(Photo photo) {
+    public void addPhoto(PhotoDto photo) {
 
     }
 
@@ -44,12 +44,12 @@ public class PhotosRepository implements PhotosDataSource{
      * responds with the data from database.
      */
     @Override
-    public List<Photo> getPhotos(LoadPhotosCallback callback) {
+    public List<PhotoDto> getPhotos(LoadPhotosCallback callback) {
         NetworkUtils networkUtils = new NetworkUtils(application);
         if (networkUtils.isOnline()) {
             remoteDataSource.getPhotos(new LoadPhotosCallback() {
                 @Override
-                public void onPhotosLoaded(List<Photo> photoList) {
+                public void onPhotosLoaded(List<PhotoDto> photoList) {
                     // on success : pass photos to presenter to be displayed and
                     // call localDataSource to save them
                     callback.onPhotosLoaded(photoList);
@@ -64,7 +64,7 @@ public class PhotosRepository implements PhotosDataSource{
         } else {
             return localDataSource.getPhotos(new LoadPhotosCallback() {
                 @Override
-                public void onPhotosLoaded(List<Photo> photoList) {
+                public void onPhotosLoaded(List<PhotoDto> photoList) {
                     callback.onPhotosLoaded(photoList);
                 }
 
