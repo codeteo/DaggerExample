@@ -4,6 +4,7 @@ import com.dagger.example.data.entities.Photo;
 import com.dagger.example.data.entities.PhotoDto;
 import com.dagger.example.data.source.PhotosDataSource;
 import com.dagger.example.features.main.utils.PhotoMapper;
+import com.dagger.example.utils.schedulers.BaseSchedulerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import timber.log.Timber;
+import rx.Observable;
 
 /**
  *  Implementation of the remote data source
@@ -24,11 +22,14 @@ public class PhotosRemoteDataSource implements PhotosDataSource {
 
     private UnsplashService unsplashService;
     private String apiKey;
+    private BaseSchedulerProvider schedulerProvider;
 
     @Inject
-    public PhotosRemoteDataSource(UnsplashService unsplashService, @Named("Api-Key") String apiKey) {
+    public PhotosRemoteDataSource(UnsplashService unsplashService,
+                            @Named("Api-Key") String apiKey, BaseSchedulerProvider schedulerProvider) {
         this.unsplashService = unsplashService;
         this.apiKey = apiKey;
+        this.schedulerProvider = schedulerProvider;
     }
 
     @Override
@@ -42,33 +43,23 @@ public class PhotosRemoteDataSource implements PhotosDataSource {
     }
 
     @Override
-    public List<PhotoDto> getPhotos(LoadPhotosCallback callback) {
-        unsplashService.getPhotos(apiKey).enqueue(new Callback<List<Photo>>() {
-            @Override
-            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-                if (response!=null && response.isSuccessful()) {
-                    Timber.i("SUCCESS");
-
+    public Observable<List<PhotoDto>> getPhotos() {
+        return unsplashService.getPhotos(apiKey)
+                .map(photoList -> {
                     List<PhotoDto> photoDtoList = new ArrayList<>();
 
                     // map objects from Photo to PhotoDto using PhotoMapper
                     PhotoMapper photoMapper = new PhotoMapper();
-                    for (Photo photo: response.body()){
+                    for (Photo photo : photoList) {
                         PhotoDto photoDto = photoMapper.from(photo);
                         photoDtoList.add(photoDto);
                     }
 
-                    callback.onPhotosLoaded(photoDtoList);
-                }
-            }
+                    return photoDtoList;
+                })
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.androidMainThread());
 
-            @Override
-            public void onFailure(Call<List<Photo>> call, Throwable t) {
-                Timber.i("onFailure");
-            }
-        });
-
-        return null;
     }
 
 }

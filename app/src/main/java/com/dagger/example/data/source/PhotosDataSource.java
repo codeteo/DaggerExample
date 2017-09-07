@@ -4,6 +4,8 @@ import com.dagger.example.data.entities.PhotoDto;
 
 import java.util.List;
 
+import rx.Observable;
+
 /**
  * Main entry point for accessing photos.
  */
@@ -14,14 +16,6 @@ public interface PhotosDataSource {
 
     void addPhoto(PhotoDto photo);
 
-    List<PhotoDto> getPhotos(LoadPhotosCallback callback);
-
-    interface LoadPhotosCallback {
-
-        void onPhotosLoaded(List<PhotoDto> photoList);
-
-        void onDataNotAvailable();
-
-    }
+    Observable<List<PhotoDto>> getPhotos();
 
 }

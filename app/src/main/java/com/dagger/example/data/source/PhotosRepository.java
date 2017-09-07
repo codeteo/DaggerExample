@@ -9,13 +9,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
+import rx.Observable;
 
 /**
  * Concrete implementation of {@link PhotosDataSource} to load photos from the data sources.
  */
 
-public class PhotosRepository implements PhotosDataSource{
+public class PhotosRepository implements PhotosDataSource {
 
     private final PhotosDataSource localDataSource;
 
@@ -46,36 +46,12 @@ public class PhotosRepository implements PhotosDataSource{
      * responds with the data from database.
      */
     @Override
-    public List<PhotoDto> getPhotos(LoadPhotosCallback callback) {
+    public Observable<List<PhotoDto>> getPhotos() {
         NetworkUtils networkUtils = new NetworkUtils(application);
         if (networkUtils.isOnline()) {
-            remoteDataSource.getPhotos(new LoadPhotosCallback() {
-                @Override
-                public void onPhotosLoaded(List<PhotoDto> photoList) {
-                    // on success : pass photos to presenter to be displayed and
-                    // call localDataSource to save them
-                    callback.onPhotosLoaded(photoList);
-                    localDataSource.addPhotos(photoList);
-                }
-
-                @Override
-                public void onDataNotAvailable() {
-                    callback.onDataNotAvailable();
-                }
-            });
+            return remoteDataSource.getPhotos();
         } else {
-            localDataSource.getPhotos(new LoadPhotosCallback() {
-                @Override
-                public void onPhotosLoaded(List<PhotoDto> photoList) {
-                    Timber.i("onPhotos Loaded");
-                    callback.onPhotosLoaded(photoList);
-                }
-
-                @Override
-                public void onDataNotAvailable() {
-                    callback.onDataNotAvailable();
-                }
-            });
+            localDataSource.getPhotos();
         }
 
         return null;

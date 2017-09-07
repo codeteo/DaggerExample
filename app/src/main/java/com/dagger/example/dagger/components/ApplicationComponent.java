@@ -8,6 +8,7 @@ import com.dagger.example.dagger.modules.ApplicationModule;
 import com.dagger.example.dagger.modules.DataModule;
 import com.dagger.example.dagger.modules.NetworkModule;
 import com.dagger.example.utils.BaseUrlInterceptor;
+import com.dagger.example.utils.schedulers.BaseSchedulerProvider;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -42,6 +43,8 @@ public interface ApplicationComponent {
     BaseUrlInterceptor baseUrlInterceptor();
 
     Realm realm();
+
+    BaseSchedulerProvider baseSchedulerProvider();
 
     @Named("Api-Key") String  getApiKey();
 }
