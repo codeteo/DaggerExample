@@ -57,13 +57,13 @@ git config --global user.name "Your Name Comes Here"
 git config --global user.email you@yourdomain.example.com
 </pre>
 
-h2. Fixing a bug
+## Fixing a bug
 
 * In most cases, pull requests for bug fixes should be based on the @maint@ branch. There are exceptions, for example corrections to bugs that have been introduced in the @master@ branch.
 
 * Write a test case *before* fixing the bug (so that you will know that the test case catches the bug). For applications without a test suite in the git repository, it would be appreciated if you provide a small code sample in the commit message or email a module that will provoke the failure.
 
-h2. Adding a new feature
+## Adding a new feature
 
 * In most cases, pull requests for new features should be based on the @master@ branch.
 
@@ -79,7 +79,7 @@ h2. Adding a new feature
 
 * In general, language changes/extensions or major updates to Kernel and STDLIB also require an EEP (Erlang Enhancement Proposal) to be written and approved before they can be included in OTP.
 
-h2. Before you submit your pull request
+## Before you submit your pull request
 
 * Make sure existing test cases don't fail. It is not necessary to run all tests (that would take many hours), but you should at least run the tests for the application you have changed. See "Running tests":https://github.com/erlang/otp/wiki/Running-tests.
 
