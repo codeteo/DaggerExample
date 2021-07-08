@@ -1,0 +1,22 @@
+language: android
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-26.0.0
+    - android-26
+    - extra-android-m2repository
+jdk:
+  - oraclejdk8
+before_install:
+    gradle -b wrapper.gradle wrapper
+script:
+  - cd app
+  - ./gradlew test
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
